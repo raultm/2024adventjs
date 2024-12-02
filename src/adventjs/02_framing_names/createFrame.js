@@ -1,8 +1,10 @@
 export const createFrame = (names) => {
     const maxLength = Math.max(...names.map(name => name.length))
-    
-    return names.reduce((acc, name) => {
-        acc += `* ${name.padEnd(maxLength)} *\n`
-        return acc
-    }, `**${"".padEnd(maxLength, "*")}**\n`)+ `**${"".padEnd(maxLength, "*")}**`;
+    const border = `**${"".padEnd(maxLength, "*")}**`
+
+    return [
+        border,
+        ...names.map(name => `* ${name.padEnd(maxLength)} *`),
+        border
+    ].join("\n")
 }
