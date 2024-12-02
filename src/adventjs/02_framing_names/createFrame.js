@@ -1,8 +1,5 @@
 export const createFrame = (names) => {
-    let maxLength = names.reduce((acc, name) => {
-        acc = name.length > acc ? name.length : acc
-        return acc
-    }, -1)
+    const maxLength = Math.max(...names.map(name => name.length))
     
     return names.reduce((acc, name) => {
         acc += `* ${name.padEnd(maxLength)} *\n`
