@@ -1,6 +1,15 @@
 export function getTips() {
     return [
         {
+            category: 'Reto #03',
+            tips: [
+                'Organizando el Inventario',
+                'Fácil',
+                'Aprendo que `reduce` añade(y no reduce wink wink) una carga de complejidad por contexto de callback, y el for es más eficiente. ',
+                'También descubro que la descomposicion puede ayudar a la performance'
+            ]
+        },
+        {
             category: 'Reto #02',
             tips: [
                 'Enmarcando Nombres',
