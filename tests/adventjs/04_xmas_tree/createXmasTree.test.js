@@ -4,7 +4,6 @@ import { createXmasTree } from '../../../src/adventjs/04_xmas_tree/createXmasTre
 describe('createXmasTree', () => {
     it('si le pasamos 5 y asterisco devuelve el arbol correcto', () => {
         const xmasTree = createXmasTree(5, '*');
-        console.log(xmasTree);
         expect(typeof xmasTree).toBe('string');
         expect(xmasTree).toEqual([
             "____*____",
