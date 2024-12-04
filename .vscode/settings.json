@@ -1,6 +1,7 @@
 {
     "conventionalCommits.scopes": [
         "challenge_02",
-        "challenge_03"
+        "challenge_03",
+        "challenge_04"
     ]
 }
