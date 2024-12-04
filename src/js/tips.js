@@ -1,6 +1,15 @@
 export function getTips() {
     return [
         {
+            category: 'Reto #04',
+            tips: [
+                'Árbol de Navidad',
+                'Medio',
+                'Sin programación funcional, back to basics ',
+                'Típico problema de clases de universidad'
+            ]
+        },
+        {
             category: 'Reto #03',
             tips: [
                 'Organizando el Inventario',
