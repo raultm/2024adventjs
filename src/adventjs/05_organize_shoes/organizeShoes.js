@@ -1,13 +1,18 @@
 export const organizeShoes = (shoes) => {
-    
-    const shoesBySize = shoes.reduce((acc, { size, type }) => {
-        if (!acc.has(size)) acc.set(size, { I: 0, R: 0 });
-        acc.get(size)[type]++;
-        return acc;
-    }, new Map());
 
-    console.log(shoesBySize);
-    return Array.from(shoesBySize.entries()).flatMap(([size, { I, R }]) =>
-        Array(Math.min(I, R)).fill(Number(size))
-    );
+    const shoeCounts = {}
+
+    for (const { size, type } of shoes) {
+        if (!shoeCounts[size]) shoeCounts[size] = { I: 0, R: 0 }
+        shoeCounts[size][type]++
+    }
+
+    const pairs = []
+    for (const size in shoeCounts) {
+        const { I, R } = shoeCounts[size]
+        const numPairs = Math.min(I, R)
+        pairs.push(...Array(numPairs).fill(Number(size)))
+    }
+
+    return pairs
 }
