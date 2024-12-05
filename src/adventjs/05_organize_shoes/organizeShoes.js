@@ -1,18 +1,14 @@
 export const organizeShoes = (shoes) => {
 
-    const shoeCounts = {}
-
-    for (const { size, type } of shoes) {
-        if (!shoeCounts[size]) shoeCounts[size] = { I: 0, R: 0 }
-        shoeCounts[size][type]++
-    }
-
-    const pairs = []
-    for (const size in shoeCounts) {
-        const { I, R } = shoeCounts[size]
-        const numPairs = Math.min(I, R)
-        pairs.push(...Array(numPairs).fill(Number(size)))
-    }
-
-    return pairs
+    return shoes.reduce((acc, { size, type }) => {
+        const oppositeKey = `${size}-${type === 'I' ? 'R' : 'I'}`
+        if (acc.counts[oppositeKey]) {
+            acc.counts[oppositeKey]--
+            acc.pairs.push(size)
+        } else {
+            const currentKey = `${size}-${type}`
+            acc.counts[currentKey] = (acc.counts[currentKey] || 0) + 1
+        }
+        return acc;
+    }, { counts: {}, pairs: [] }).pairs
 }
