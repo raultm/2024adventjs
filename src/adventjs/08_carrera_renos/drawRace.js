@@ -1,27 +1,21 @@
 export const drawRace = (indices, length) => {
-    let horses = indices.length
-    let snowChar = "~"
-    let riderChar = "r"
-    return indices.map( (position, index) => {
-        // Crear la cadena inicial de caracteres repetidos
-        let snowTrack = Array.from({ length }, () => snowChar);
+    const horses = indices.length;
+    const snowChar = "~";
+    const riderChar = "r";
 
-        // Calcular la posición basada en el parámetro
+    return indices.map((position, index) => {
         const targetIndex = 
-            position > 0 ? position : // Desde el inicio
-            position < 0 ? length + position : // Desde el final
-            null; // Si  es 0
+            position > 0 ? position : 
+            position < 0 ? length + position : 
+            null;
 
-        // Si targetIndex es válido, reemplazar el carácter en esa posición
-        const result = snowTrack.map((char, index) => 
-            index === targetIndex ? riderChar : char
-        );
+        // Crear la cadena directamente con el carácter del corredor en su posición
+        const snowTrack = Array(length).fill(snowChar);
+        if (targetIndex !== null && targetIndex >= 0 && targetIndex < length) {
+            snowTrack[targetIndex] = riderChar;
+        }
 
-        // Convertir el array de nuevo a una cadena
-        return [
-            " ".repeat(horses - 1 - index) 
-          + result.join('')
-          + ` /${index+1}`
-        ]
-     }).join("\n")
+        // Formar la línea con la indentación adecuada
+        return " ".repeat(horses - 1 - index) + snowTrack.join('') + ` /${index + 1}`;
+    }).join("\n");
 }
