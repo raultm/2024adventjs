@@ -94,6 +94,18 @@ describe('compile', () => {
         expect(ret).toEqual(8);
     })
 
+    it('si le pasamos duodecimo caso nos devuelve 1', () => {
+        const instructions = [
+            "JMP A 2",
+            "MOV -1 B",
+            "INC B",
+            "JMP B 1",
+            "MOV B A"
+        ]
+        const ret = compile(instructions);
+        expect(ret).toEqual(1);
+    })
+
     
 
 })

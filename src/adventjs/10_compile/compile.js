@@ -2,6 +2,7 @@ export const compile = (instructions) => {
     let nextInstruction = 0
     let register = { A: undefined }
     while(nextInstruction < instructions.length){
+        
         let [command,first,second] = instructions[nextInstruction].split(" ")
         
         if(command == "INC"){ register[first] = (register[first] ?? 0) + 1 }
@@ -14,11 +15,14 @@ export const compile = (instructions) => {
             }
         }
         if(command == "JMP"){
-            if(register[first] == 0 && second != nextInstruction){
-
-                nextInstruction = second
-                console.log(command, first, second, register)
-                continue
+            second = Number(second);
+            if (Number.isInteger(second) && second >= 0 && second < instructions.length) {
+                if (register[first] == 0 || register[first] == undefined) {
+                    nextInstruction = second;
+                    continue;
+                }
+            } else {
+                throw new Error(`Índice de salto inválido: ${second}`);
             }
         }
         //console.log(command, first, second, register)
