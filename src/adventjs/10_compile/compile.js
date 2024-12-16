@@ -1,35 +1,32 @@
 export const compile = (instructions) => {
     let nextInstruction = 0
     let register = { A: undefined }
-    while(nextInstruction < instructions.length){
-        
-        let [command,first,second] = instructions[nextInstruction].split(" ")
-        
-        if(command == "INC"){ register[first] = (register[first] ?? 0) + 1 }
-        if(command == "DEC"){ register[first] = (register[first] ?? 0) - 1 }
-        if(command == "MOV"){
-            if(!isNaN(first)){
-                register[second] = Number(first)
+    const commands = {
+        "INC" : (register, target) => { register[target] = (register[target] || 0) + 1; return },
+        "DEC" : (register, target) => { register[target] = (register[target] || 0) - 1; return },
+        "MOV" : (register, index, target) => {
+            if(!isNaN(index)){
+                register[target] = Number(index)
             }else{
-                register[second] = register[first] ? register[first] : 0
+                register[target] = register[index] ? register[index] : 0
             }
-        }
-        if(command == "JMP"){
-            second = Number(second);
-            if (Number.isInteger(second) && second >= 0 && second < instructions.length) {
-                if (register[first] == 0 || register[first] == undefined) {
-                    nextInstruction = second;
-                    continue;
+            return
+        },
+        "JMP" : (register, target, newIndex) => {
+            newIndex = Number(newIndex);
+            if (Number.isInteger(newIndex) && newIndex >= 0 && newIndex < instructions.length) {
+                if (register[target] == 0 || register[target] == undefined) {
+                    return newIndex;
                 }
-            } else {
-                throw new Error(`Índice de salto inválido: ${second}`);
-            }
+            } 
+            return
         }
-        //console.log(command, first, second, register)
-        nextInstruction++
+    }
+
+    while(nextInstruction < instructions.length){
+        let [command,first,second] = instructions[nextInstruction].split(" ")
+        nextInstruction = commands[command](register, first, second) ?? (nextInstruction+1)
     }
     
-    //console.log(register)
-
     return register["A"]
 }
