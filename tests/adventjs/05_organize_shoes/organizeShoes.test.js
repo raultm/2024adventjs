@@ -42,6 +42,17 @@ describe('organizeShoes', () => {
         expect(organizedShoes).toEqual([42]);
     })
 
+    it('si le pasamos sexto caso nos devuelve un par de 39', () => {
+        const shoes = [
+            { type: 'I', size: 39 },
+            { type: 'R', size: 39 },
+            { type: 'R', size: 39 },
+          ]
+        const organizedShoes = organizeShoes(shoes);
+        expect(typeof organizedShoes).toBe('object');
+        expect(organizedShoes).toEqual([39]);
+    })
+
 
 
 })
