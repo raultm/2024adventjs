@@ -8,19 +8,28 @@ export const fixGiftList = (received, expected) => {
     return acc
   }, {})
 
-  let gifsList =  Object.keys(expectedGrouped).reduce((acc, item) => {
-    const missing = expectedGrouped[item] - (receivedGrouped[item] || 0)
-    const extra = (receivedGrouped[item] || 0) - expectedGrouped[item]
+  return  Object.keys(expectedGrouped).reduce((acc, item) => {
     
-    if (missing > 0) acc.missing[item] = missing
-    if (extra > 0) acc.extra[item] = extra
+    acc.extra[item] = (acc.extra[item] || 0) - expectedGrouped[item]
+    
+    if(acc.extra[item] == 0) delete acc.extra[item]
+    if(acc.extra[item] < 0) {
+      acc.missing[item] = Math.abs(acc.extra[item])
+      delete acc.extra[item]
+    }
+    // console.log(acc, item, expectedGrouped[item], acc.extra[item] < 0)
+    // const missing = expectedGrouped[item] - (receivedGrouped[item] || 0)
+    // const extra = (receivedGrouped[item] || 0) - expectedGrouped[item]
+    
+    // if (missing > 0) acc.missing[item] = missing
+    // if (extra > 0) acc.extra[item] = extra
     
     return acc
-  }, { missing: {}, extra: {} })
+  }, { missing: {}, extra: receivedGrouped })
 
-  return Object.keys(receivedGrouped).reduce((acc, item) => {
-    if (!expectedGrouped[item]) acc.extra[item] = receivedGrouped[item]
-    return acc
-  }, gifsList)
+  // return Object.keys(receivedGrouped).reduce((acc, item) => {
+  //   if (!expectedGrouped[item]) acc.extra[item] = receivedGrouped[item]
+  //   return acc
+  // }, gifsList)
 
 }
